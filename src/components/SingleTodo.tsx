@@ -26,13 +26,24 @@ const SingleTodo = ({todo, todos, setTodos}: Props ) => {
         setTodos(todos.filter((todo) => todo.id !== id));
     };
 
+    const handleEdit = (e: React.FormEvent, id: number) => {
+        e.preventDefault();
+
+        setTodos (
+            todos.map((todo) => (todo.id === id ? {...todo, todo: editTodo} : todo))
+        )
+        setEdit(false);
+    }
+
 
   return (
-    <form className="todos_single">
+    <form className="todos_single" onSubmit={(e) => handleEdit(e, todo.id)}>
 
         {
             edit ? (
-                <input />
+                <input value={editTodo} 
+                onChange={(e) => setEditTodo(e.target.value)} 
+                className="todo_single_text"/>
             ) : todo.isDone ? (
                 <s className="todos_single_text">
                 {todo.todo}
@@ -56,7 +67,7 @@ const SingleTodo = ({todo, todos, setTodos}: Props ) => {
                 <AiFillEdit />
             </span>
             <span className="icon">
-                <AiFillDelete />
+                <AiFillDelete onClick={() => handleDelete(todo.id)}/>
             </span>
             <span className="icon"
             onClick={()=> handleDone(todo.id)}>

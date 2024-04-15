@@ -21,8 +21,6 @@ const App: React.FC = () => {
 
   }
 
-  console.log(todos);
-
   return <div className="App">
     <span className="heading">Taskify</span>
     <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd}/>
